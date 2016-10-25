@@ -15,7 +15,6 @@ object currying {
       case "/" => a/b
       case _ =>  "Enter the right parameters"
     }
-    
   }
   def mapReduce(f:Int => Int,combine:(Int,Int) => Int, Zero:Int)(a:Int,b:Int):Int ={
     if (a >b) Zero

@@ -10,7 +10,7 @@ package com.simple
  */
 
 trait allTraits {
-  val babe = "Zarina"
+  val babe = "Katrina"
   def show() {
     println(babe+" looks beautiful")
   }
