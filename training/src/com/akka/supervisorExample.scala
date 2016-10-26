@@ -6,6 +6,8 @@ import akka.actor.SupervisorStrategy._
 import akka.actor.OneForOneStrategy
 import akka.actor.Props
 import akka.actor.actorRef2Scala
+import akka.actor.TypedActor.PreStart
+import akka.actor.TypedActor.PreRestart
 
 object supervisorExample extends App{
   
@@ -19,6 +21,7 @@ object supervisorExample extends App{
     private var childnum = 0
     def receive = {
       case CreateChildren =>
+        println("Child Created")
         context.actorOf(Props[ChildActor],"Child"+childnum)
         childnum += 1
       case SignalToChild(n) =>
@@ -31,6 +34,22 @@ object supervisorExample extends App{
       case _:Exception => 
         println("Actor being shutdown and new actor will be restarted")
         Restart
+    }
+    override def preStart() {
+      super.preStart()
+      println("preStart")
+    }
+    override def postStop() {
+      super.postStop()
+      println("preStop")
+    }
+    override def preRestart(reason: Throwable, message: Option[Any]){
+      super.preRestart(reason, message)
+      println("preRestart")
+    }
+    override def postRestart(reason: Throwable) {
+      super.postRestart(reason)
+      println("postRestart")
     }
   }
    class ChildActor extends Actor{
@@ -50,8 +69,11 @@ object supervisorExample extends App{
   val actor2 = system.actorOf(Props[ParentActor],"Parent2")
   
   actor ! CreateChildren
-  val child0 = system.actorSelection("akka://SupervisorSystem/user/Parent1/Child0")
+  val child0 = system.actorSelection("/user/Parent1/Child0")
   child0 ! DevideNum(4,0)
+  child0 ! DevideNum(4,2)
   child0 ! SomethingBad
   
+  Thread.sleep(1000)
+  system.terminate()
 }
