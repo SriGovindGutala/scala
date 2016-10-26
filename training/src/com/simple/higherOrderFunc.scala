@@ -1,6 +1,6 @@
 package com.simple
 /* - Functions that take other functions as parameters or that return functions as results are higher order functions.
- * - A function which is having anonymous function as a parameter is called as higher order fucntion
+ * - There can be a anonymous function as a parameter too
  * 
  */
 object higherOrderFunc {
