@@ -1,4 +1,4 @@
-package com.simple
+package com.akka
 
 // - Akka is used for parellism in scala
 // - Everything that is in Actor needs to define a receive method
@@ -13,6 +13,7 @@ package com.simple
 import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props
+import akka.actor.actorRef2Scala
 
 object akkaSimpleActor extends App{
   
